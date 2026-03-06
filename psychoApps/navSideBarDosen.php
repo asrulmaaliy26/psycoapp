@@ -1,11 +1,11 @@
-<?php include( "contentsConAdm.php" );
+<?php include("contentsConAdm.php");
 $username = $_SESSION['username'];
 $myquery = "SELECT * FROM dt_pegawai WHERE id='$username'";
-$d = mysqli_query($con, $myquery)or die( mysqli_error($con));
+$d = mysqli_query($con, $myquery) or die(mysqli_error($con));
 $dtDosen = mysqli_fetch_assoc($d);
 ?>
-<aside <?php include( "main-sidebar-style.php" )?>>
-  <?php include( "brandNavAdm.php" );?>
+<aside <?php include("main-sidebar-style.php") ?>>
+  <?php include("brandNavAdm.php"); ?>
   <div class="sidebar text-xs">
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent nav-legacy nav-compact" data-widget="treeview" role="menu" data-accordion="false">
@@ -17,6 +17,31 @@ $dtDosen = mysqli_fetch_assoc($d);
             </p>
           </a>
         </li>
+
+        <!-- ===== Toggle S1 / S2 ===== -->
+        <?php
+        // Default mode: S1
+        if (empty($_SESSION['dosen_mode'])) $_SESSION['dosen_mode'] = 'S1';
+        $mode = $_SESSION['dosen_mode'];
+        $mode_label  = ($mode === 'S1') ? 'S1 – Skripsi' : 'S2 – Tesis';
+        $badge_class = ($mode === 'S1') ? 'badge-primary' : 'badge-success';
+        $switch_url  = ($mode === 'S1') ? 'dashboardAdm.php?dosen_mode=S2' : 'dashboardAdm.php?dosen_mode=S1';
+        $switch_label = ($mode === 'S1') ? '🔄 Ke Mahasiswa S2' : '🔄 Ke Mahasiswa S1';
+        ?>
+        <li class="nav-item px-3 py-2">
+          <div class="text-center mb-1 small">
+            <span class="badge <?php echo $badge_class; ?> px-2 py-1">
+              Mode: Mahasiswa <?php echo $mode_label; ?>
+            </span>
+          </div>
+          <a href="<?php echo $switch_url; ?>" class="btn btn-outline-warning btn-block btn-xs">
+            <?php echo $switch_label; ?>
+          </a>
+        </li>
+        <li class="nav-header text-muted small">
+          <?php echo ($mode === 'S1') ? '— Data Mahasiswa S1 (Skripsi) —' : '— Data Mahasiswa S2 (Tesis) —'; ?>
+        </li>
+
         <li class="nav-item menu-open">
           <a href="#" class="nav-link text-warning">
             <i class="fas fa-star-half-alt nav-icon"></i>
@@ -38,7 +63,8 @@ $dtDosen = mysqli_fetch_assoc($d);
                 <p>Ujian Skripsi</p>
               </a>
             </li>
-            <?php if($dtDosen['menguji_sempro_tesis']=='2') {echo '
+            <?php if ($dtDosen['menguji_sempro_tesis'] == '2') {
+              echo '
             <li class="nav-item">
               <a href="dashboardBeritaAcaraSemproTes.php" class="nav-link">
                 <i class="text-xs far fa-circle nav-icon"></i>
@@ -51,7 +77,8 @@ $dtDosen = mysqli_fetch_assoc($d);
                 <p>Ujian Tesis</p>
               </a>
             </li>
-            ';}?>
+            ';
+            } ?>
           </ul>
         </li>
         <li class="nav-item menu-open">
@@ -75,7 +102,8 @@ $dtDosen = mysqli_fetch_assoc($d);
                 <p>Pembimbing II Skripsi</p>
               </a>
             </li>
-            <?php if($dtDosen['menguji_sempro_tesis']=='2') {echo '
+            <?php if ($dtDosen['menguji_sempro_tesis'] == '2') {
+              echo '
             <li class="nav-item">
               <a href="pembimbingTesis1.php" class="nav-link">
                 <i class="text-xs far fa-circle nav-icon"></i>
@@ -88,7 +116,8 @@ $dtDosen = mysqli_fetch_assoc($d);
                 <p>Pembimbing II Tesis</p>
               </a>
             </li>
-            ';}?>
+            ';
+            } ?>
           </ul>
         </li>
         <li class="nav-item menu-open">
@@ -112,7 +141,8 @@ $dtDosen = mysqli_fetch_assoc($d);
                 <p>Ujian Skripsi</p>
               </a>
             </li>
-            <?php if($dtDosen['menguji_sempro_tesis']=='2') {echo '
+            <?php if ($dtDosen['menguji_sempro_tesis'] == '2') {
+              echo '
             <li class="nav-item">
               <a href="berkasSemproTes.php" class="nav-link">
                 <i class="text-xs far fa-circle nav-icon"></i>
@@ -125,7 +155,8 @@ $dtDosen = mysqli_fetch_assoc($d);
                 <p>Ujian Tesis</p>
               </a>
             </li>
-            ';}?>
+            ';
+            } ?>
             <li class="nav-item">
               <a href="berkasSk.php" class="nav-link">
                 <i class="text-xs far fa-circle nav-icon"></i>
@@ -146,7 +177,8 @@ $dtDosen = mysqli_fetch_assoc($d);
             </li>
           </ul>
         </li>
-        <?php if($dtDosen['jabatan_instansi']=='47') {echo '
+        <?php if ($dtDosen['jabatan_instansi'] == '47') {
+          echo '
         <li class="nav-item menu-open">
           <a href="#" class="nav-link text-warning">
             <i class="fas fa-file-alt nav-icon"></i>
@@ -164,8 +196,10 @@ $dtDosen = mysqli_fetch_assoc($d);
             </li>
           </ul>
         </li>
-        ';}?>
-        <?php if($dtDosen['jabatan_instansi']=='36') {echo '
+        ';
+        } ?>
+        <?php if ($dtDosen['jabatan_instansi'] == '36') {
+          echo '
         <li class="nav-item menu-open">
           <a href="#" class="nav-link text-warning">
             <i class="fas fa-file-alt nav-icon"></i>
@@ -183,7 +217,8 @@ $dtDosen = mysqli_fetch_assoc($d);
             </li>
           </ul>
         </li>
-        ';}?>
+        ';
+        } ?>
       </ul>
     </nav>
   </div>

@@ -30,6 +30,19 @@ foreach ($cfg['session_set'] as $sKey => $sVal) {
     $_SESSION[$sKey] = str_replace('{val}', $val, $sVal);
 }
 
+// Handle extra_session_query: ambil field tambahan dari DB (contoh: nama_s2 dari mag_dt_mhssw_pasca)
+if (!empty($cfg['extra_session_query'])) {
+    $eq      = $cfg['extra_session_query'];
+    $eTable  = mysqli_real_escape_string($con, $eq['table']);
+    $eValCol = mysqli_real_escape_string($con, $eq['val_col']);
+    $eLblCol = mysqli_real_escape_string($con, $eq['label_col']);
+    $eVal    = mysqli_real_escape_string($con, $val);
+    $eResult = mysqli_query($con, "SELECT `$eLblCol` FROM `$eTable` WHERE `$eValCol` = '$eVal' LIMIT 1");
+    if ($eResult && $eRow = mysqli_fetch_assoc($eResult)) {
+        $_SESSION[$eq['session_key']] = $eRow[$eq['label_col']];
+    }
+}
+
 // Simpan info SA (jangan hapus flag SA)
 $_SESSION['is_superadmin']  = true;
 $_SESSION['sa_role_active'] = $role;

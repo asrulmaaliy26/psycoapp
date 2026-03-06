@@ -50,13 +50,29 @@ function sa_roles(): array
         'mahasiswa_s2' => [
             'label'       => 'Mahasiswa S2',
             'icon'        => '🧑‍🎓',
-            'module'      => 'simagis',
-            'redirect'    => '../simagis/dashboardUser.php',
-            'session_set' => ['nim' => '{val}', 'username' => '{val}', 'status' => '1'],
+            'module'      => 'psychoApps',
+            // Redirect ke dashboard S2 baru di PsychoApp
+            'redirect'    => 'dashboardUserS2.php',
+            // Set session yang dipakai oleh dashboardUserS2.php dan simagis logUser
+            'session_set' => [
+                'nim'      => '{val}',
+                'nim_s2'   => '{val}',
+                // nama_s2 diambil via session_extra di superAdminSwitch.php
+                'status'   => '1',
+                'status_s2' => '1',
+            ],
             'db_table'    => 'mag_dt_mhssw_pasca',
             'db_val'      => 'nim',
             'db_label'    => "CONCAT(nim, ' — ', nama)",
             'db_search'   => ['nim', 'nama'],
+            'db_where'    => '1=1',
+            // Flag agar superAdminSwitch.php tahu perlu query nama untuk session nama_s2
+            'extra_session_query' => [
+                'session_key' => 'nama_s2',
+                'table'       => 'mag_dt_mhssw_pasca',
+                'val_col'     => 'nim',
+                'label_col'   => 'nama',
+            ],
         ],
         'dosen' => [
             'label'       => 'Dosen',
