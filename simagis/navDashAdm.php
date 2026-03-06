@@ -1,17 +1,17 @@
 <?php include "koneksiAdm.php";
-  $username = $_SESSION['username'];
-     $myquery = "select * from mag_dt_admin_bak WHERE username='$username'";
-     $dmhssw = mysqli_query($GLOBALS["___mysqli_ston"], $myquery)or die( mysqli_error($GLOBALS["___mysqli_ston"]));
-     $dataku = mysqli_fetch_assoc($dmhssw);
-     ?>
+$username = $_SESSION['username'];
+$myquery = "select * from mag_dt_admin_bak WHERE username='$username'";
+$dmhssw = mysqli_query($GLOBALS["___mysqli_ston"], $myquery) or die(mysqli_error($GLOBALS["___mysqli_ston"]));
+$dataku = mysqli_fetch_assoc($dmhssw);
+?>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#">Simagis</a>
     </div>
@@ -72,7 +72,8 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="logoutAdm.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
       </ul>
-      <p class="navbar-text navbar-right hidden-sm hidden-xs">Admin: <?php echo $dataku['nama'];?></p>
+      <p class="navbar-text navbar-right hidden-sm hidden-xs">Admin: <?php echo $dataku['nama']; ?></p>
     </div>
   </div>
 </nav>
+<?php if (!empty($_SESSION['is_superadmin'])) include __DIR__ . '/../psychoApps/_saBar.php'; ?>

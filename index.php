@@ -91,6 +91,11 @@ if (!empty($_GET['message']) && $_GET['message'] == 'notifLogin') {
               <button type="submit" class="btn btn-primary btn-block">Sign In</button>
             </div>
           </div>
+          <div class="row mt-3">
+            <div class="col-12 text-center">
+              <a href="docs.php" class="text-secondary"><i class="fas fa-book"></i> Baca Dokumentasi Sistem</a>
+            </div>
+          </div>
         </form>
       </div>
     </div>
