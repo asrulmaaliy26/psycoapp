@@ -21,6 +21,7 @@ function sa_roles(): array
             'db_val'      => 'username',
             'db_label'    => "CONCAT(username, ' — ', nm_person)",
             'db_search'   => ['username', 'nm_person'],
+            'db_where'    => "level='7'",
         ],
         'admin_bak_s2' => [
             'label'       => 'Admin BAK S2',
@@ -32,6 +33,7 @@ function sa_roles(): array
             'db_val'      => 'username',
             'db_label'    => "CONCAT(username, ' — ', nm_person)",
             'db_search'   => ['username', 'nm_person'],
+            'db_where'    => "level='8'",
         ],
         'mahasiswa_s1' => [
             'label'       => 'Mahasiswa S1',
@@ -39,10 +41,11 @@ function sa_roles(): array
             'module'      => 'psychoApps',
             'redirect'    => 'dashboardUserS1.php',
             'session_set' => ['username' => '{val}', 'status' => '1'],
-            'db_table'    => 'dt_mhssw',
-            'db_val'      => 'nim',
-            'db_label'    => "CONCAT(nim, ' — ', nama)",
-            'db_search'   => ['nim', 'nama'],
+            'db_table'    => 'dt_all_adm',
+            'db_val'      => 'username',
+            'db_label'    => "CONCAT(username, ' — ', nm_person)",
+            'db_search'   => ['username', 'nm_person'],
+            'db_where'    => "level='2'",
         ],
         'mahasiswa_s2' => [
             'label'       => 'Mahasiswa S2',
@@ -61,10 +64,11 @@ function sa_roles(): array
             'module'      => 'psychoApps',
             'redirect'    => 'dashboardBeritaAcaraSempro.php',
             'session_set' => ['username' => '{val}', 'status' => '1'],
-            'db_table'    => 'dt_pegawai',
-            'db_val'      => 'nip',
-            'db_label'    => "CONCAT(nip, ' — ', nama)",
-            'db_search'   => ['nip', 'nama'],
+            'db_table'    => 'dt_all_adm',
+            'db_val'      => 'username',
+            'db_label'    => "CONCAT(username, ' — ', nm_person)",
+            'db_search'   => ['username', 'nm_person'],
+            'db_where'    => "level='1'",
         ],
         'admin_kepeg' => [
             'label'       => 'Admin Kepegawaian',
@@ -76,6 +80,7 @@ function sa_roles(): array
             'db_val'      => 'username',
             'db_label'    => "CONCAT(username, ' — ', nm_person)",
             'db_search'   => ['username', 'nm_person'],
+            'db_where'    => "level='4'",
         ],
         'admin_bmn' => [
             'label'       => 'Admin BMN',
@@ -87,6 +92,7 @@ function sa_roles(): array
             'db_val'      => 'username',
             'db_label'    => "CONCAT(username, ' — ', nm_person)",
             'db_search'   => ['username', 'nm_person'],
+            'db_where'    => "level='5'",
         ],
         'admin_taper' => [
             'label'       => 'Admin Tata Persuratan',
@@ -98,6 +104,7 @@ function sa_roles(): array
             'db_val'      => 'username',
             'db_label'    => "CONCAT(username, ' — ', nm_person)",
             'db_search'   => ['username', 'nm_person'],
+            'db_where'    => "level='6'",
         ],
     ];
 }

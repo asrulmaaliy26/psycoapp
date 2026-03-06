@@ -40,24 +40,26 @@ $txtCol = $cfg['db_label'];
 $search = $cfg['db_search'];
 $isSearch = ($rawQ !== '' && $rawQ !== '*');
 
+$dbWhere = isset($cfg['db_where']) ? $cfg['db_where'] : '1=1';
+
 if ($isSearch) {
     // Mode SEARCH: query semua data yang cocok, tanpa pagination
     $esc   = '%' . mysqli_real_escape_string($con, $rawQ) . '%';
-    $where = implode(' OR ', array_map(fn($c) => "`$c` LIKE '$esc'", $search));
-    $sql   = "SELECT `$valCol` AS val, $txtCol AS text FROM `$table` WHERE $where ORDER BY `$valCol` DESC LIMIT 200";
+    $whereSearch = implode(' OR ', array_map(fn($c) => "`$c` LIKE '$esc'", $search));
+    $sql   = "SELECT `$valCol` AS val, $txtCol AS text FROM `$table` WHERE ($whereSearch) AND ($dbWhere) ORDER BY `$valCol` DESC LIMIT 200";
     $res   = mysqli_query($con, $sql);
     $data  = [];
     while ($r = mysqli_fetch_assoc($res)) $data[] = ['val' => $r['val'], 'text' => $r['text']];
     echo json_encode(['data' => $data, 'total' => count($data), 'page' => 1, 'pages' => 1, 'is_search' => true]);
 } else {
     // Mode LIST (paginated), urutan terbaru (DESC)
-    $countSql = "SELECT COUNT(*) AS n FROM `$table`";
+    $countSql = "SELECT COUNT(*) AS n FROM `$table` WHERE $dbWhere";
     $total    = (int) mysqli_fetch_assoc(mysqli_query($con, $countSql))['n'];
     $pages    = max(1, (int) ceil($total / $limit));
     $page     = min($page, $pages);
     $offset   = ($page - 1) * $limit;
 
-    $sql  = "SELECT `$valCol` AS val, $txtCol AS text FROM `$table` ORDER BY `$valCol` DESC LIMIT $limit OFFSET $offset";
+    $sql  = "SELECT `$valCol` AS val, $txtCol AS text FROM `$table` WHERE $dbWhere ORDER BY `$valCol` DESC LIMIT $limit OFFSET $offset";
     $res  = mysqli_query($con, $sql);
     $data = [];
     while ($r = mysqli_fetch_assoc($res)) $data[] = ['val' => $r['val'], 'text' => $r['text']];
